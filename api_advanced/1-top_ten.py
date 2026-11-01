@@ -13,14 +13,22 @@ def top_ten(subreddit):
     headers = {"User-Agent": "alu-scripting:v1.0.0 (by /u/adukwu137)"}
 
     try:
-        res = requests.get(url, headers=headers, allow_redirects=False)
+        res = requests.get(
+            url,
+            headers=headers,
+            allow_redirects=False
+        )
         if res.status_code != 200:
             print("None")
             return
-        posts = res.json().get("data", {}).get("children", [])
+
+        data = res.json().get("data", {})
+        posts = data.get("children", [])
         if not posts:
             print("None")
             return
-        print("OK")
+
+        for post in posts:
+            print(post.get("data", {}).get("title"))
     except Exception:
         print("None")
