@@ -17,7 +17,6 @@ def number_of_subscribers(subreddit):
     )
 
     try:
-        # allow_redirects=False is handled by checking the final URL or handling HTTPError
         with urllib.request.urlopen(req) as response:
             data = json.loads(response.read().decode())
             return data.get("data", {}).get("subscribers", 0)
