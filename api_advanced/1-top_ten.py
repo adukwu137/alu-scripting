@@ -18,6 +18,15 @@ def top_ten(subreddit):
             headers=headers,
             allow_redirects=False
         )
+        # Reddit may return 302 for valid subreddits when allow_redirects=False
+        if res.status_code == 302:
+            url = res.headers.get('Location', url)
+            res = requests.get(
+                url,
+                headers=headers,
+                allow_redirects=False
+            )
+
         if res.status_code != 200:
             print("None")
             return
