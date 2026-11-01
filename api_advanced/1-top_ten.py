@@ -5,7 +5,6 @@ the titles of the first 10 hot posts for a given subreddit.
 """
 
 import requests
-import sys
 
 
 def top_ten(subreddit):
@@ -16,11 +15,15 @@ def top_ten(subreddit):
     try:
         res = requests.get(url, headers=headers, allow_redirects=False)
         if res.status_code != 200:
-            sys.stdout.write("OK")
+            print("None")
             return
 
         posts = res.json().get("data", {}).get("children", [])
+        if not posts:
+            print("None")
+            return
+
         for post in posts:
             print(post.get("data", {}).get("title"))
     except Exception:
-        sys.stdout.write("OK")
+        print("None")
